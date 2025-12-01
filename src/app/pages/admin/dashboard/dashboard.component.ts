@@ -29,7 +29,7 @@ import { AuthService } from '../../../core/services/auth.service';
     <div class="mt-6">
       <div class="flex gap-3 items-center justify-between">
         <h3 class="text-lg font-semibold text-slate-800">Questionnaires</h3>
-        <app-button routerLink="/admin/questionnaires/new" [disabled]="isDemo">Create New</app-button>
+        <app-button routerLink="/admin/questionnaires/new">Create New</app-button>
       </div>
       <div class="mt-4 flex flex-col space-y-3">
       <app-card *ngFor="let q of list">
