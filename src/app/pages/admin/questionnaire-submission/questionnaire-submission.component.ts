@@ -29,7 +29,7 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
         </div>
       </app-card>
 
-      <div class="space-y-3">
+      <div class="flex flex-col space-y-3 mt-3">
         <app-card *ngFor="let a of submission.answers">
           <div class="text-sm font-semibold text-slate-800">{{ a.questionText }}</div>
           <div class="mt-1 text-sm text-slate-700">

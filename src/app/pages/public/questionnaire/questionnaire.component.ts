@@ -11,17 +11,17 @@ import { Answer } from '../../../core/models/answer.model';
   standalone: true,
   imports: [ButtonComponent, CardComponent, NgFor, NgIf, NgSwitch, NgSwitchCase, NgClass],
   template: `
-    <div *ngIf="qData">
+    <div class="mb-4" *ngIf="qData">
       <app-card class="mb-4">
         <div class="text-xs uppercase tracking-wide text-primary-600">Questionnaire</div>
         <h1 class="text-2xl font-bold text-slate-900">{{ qData.questionnaire.title }}</h1>
         <p class="text-slate-600">{{ qData.questionnaire.description }}</p>
       </app-card>
 
-      <div class="grid gap-4 md:grid-cols-[2fr_1fr]">
-        <div class="space-y-4">
+      <div class="grid gap-4 mt-3 md:grid-cols-[2fr_1fr]">
+        <div class="flex flex-col space-y-4">
           <app-card
-            *ngFor="let q of qData.questions"
+            *ngFor="let q of qData.questions || []"
             [extraClass]="isFlagged(q.id) ? 'border border-amber-200 bg-amber-50 animate-pulse' : ''"
           >
             <div class="flex items-start justify-between gap-2">
@@ -31,7 +31,7 @@ import { Answer } from '../../../core/models/answer.model';
               </div>
               <button class="text-xs text-amber-600" (click)="toggleFlag(q.id)">🚩 Flag</button>
             </div>
-            <div class="mt-3 space-y-2 text-sm">
+            <div class="mt-3 flex flex-col space-y-2 text-sm">
               <ng-container [ngSwitch]="q.type">
                 <input
                   *ngSwitchCase="'text'"
@@ -48,7 +48,7 @@ import { Answer } from '../../../core/models/answer.model';
                 />
                 <div *ngSwitchCase="'mcq'" class="space-y-2">
                   <label
-                    *ngFor="let opt of q.options"
+                    *ngFor="let opt of (q.options || [])"
                     class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2"
                   >
                     <input type="radio" name="mcq-{{ q.id }}" (change)="setAnswer(q.id, opt)" />
@@ -57,7 +57,7 @@ import { Answer } from '../../../core/models/answer.model';
                 </div>
                 <div *ngSwitchCase="'checkbox'" class="space-y-2">
                   <label
-                    *ngFor="let opt of q.options"
+                    *ngFor="let opt of (q.options || [])"
                     class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2"
                   >
                     <input
@@ -72,7 +72,7 @@ import { Answer } from '../../../core/models/answer.model';
           </app-card>
         </div>
 
-        <div class="space-y-4">
+        <div class="flex flex-col mt-3 space-y-4">
           <app-card>
             <div class="text-sm font-semibold text-slate-800 text-center">Flagged questions</div>
             <div class="mt-3 space-y-2 text-sm text-slate-600 text-center">

@@ -12,32 +12,45 @@ import { AuthService } from '../../../core/services/auth.service';
   standalone: true,
   imports: [NgFor, NgIf, RouterLink, ButtonComponent, CardComponent, ModalComponent],
   template: `
-    <div class="flex items-center justify-between">
+    <div class="flex gap-3 items-center justify-between">
       <h2 class="text-xl font-semibold text-slate-800">Questionnaires</h2>
       <app-button routerLink="/admin/questionnaires/new">Create New</app-button>
     </div>
 
     <div class="mt-4 space-y-3">
       <app-card *ngFor="let q of list">
-          <div class="flex items-center justify-between">
-            <div>
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
               <div class="text-lg font-semibold text-slate-800">{{ q.title }}</div>
-              <div class="text-sm text-slate-500">{{ q.description }}</div>
+              <div class="md:hidden">
+                <button
+                  class="rounded-full p-2 text-slate-600 hover:bg-slate-100"
+                  (click)="toggleMenu(q.id)"
+                >
+                  ⋮
+                </button>
+                <div
+                  *ngIf="menuOpenId === q.id"
+                  class="absolute right-4 z-10 mt-2 w-40 rounded-xl border border-slate-200 bg-white shadow-card"
+                >
+                  <button class="flex w-full items-center px-4 py-2 text-left text-sm hover:bg-slate-50" (click)="openPublic(q.id)" [disabled]="isDemo">Share</button>
+                  <button class="flex w-full items-center px-4 py-2 text-left text-sm hover:bg-slate-50" [routerLink]="'/admin/questionnaires/' + q.id + '/edit'" [disabled]="isDemo">Edit</button>
+                  <button class="flex w-full items-center px-4 py-2 text-left text-sm hover:bg-slate-50" [routerLink]="'/admin/questionnaires/' + q.id + '/results'">Results</button>
+                  <button class="flex w-full items-center px-4 py-2 text-left text-sm text-danger-600 hover:bg-slate-50" (click)="confirmDelete(q.id)" [disabled]="isDemo">Delete</button>
+                </div>
+              </div>
             </div>
-            <div class="flex gap-2 text-sm">
-              <app-button
-                variant="secondary"
-                (click)="openPublic(q.id)"
-                [disabled]="isDemo"
-              >
-                Share
-              </app-button>
-            <app-button variant="secondary" routerLink="/admin/questionnaires/{{ q.id }}/edit" [disabled]="isDemo">Edit</app-button>
-            <app-button variant="secondary" routerLink="/admin/questionnaires/{{ q.id }}/results">Results</app-button>
-            <app-button variant="danger" (click)="confirmDelete(q.id)" [disabled]="isDemo">Delete</app-button>
-            </div>
+            <div class="text-sm text-slate-500">{{ q.description }}</div>
           </div>
-        </app-card>
+          <div class="relative hidden md:flex gap-2 text-sm">
+            <app-button variant="secondary" (click)="openPublic(q.id)" [disabled]="isDemo">Share</app-button>
+            <app-button variant="secondary" [routerLink]="'/admin/questionnaires/' + q.id + '/edit'" [disabled]="isDemo">Edit</app-button>
+            <app-button variant="secondary" [routerLink]="'/admin/questionnaires/' + q.id + '/results'">Results</app-button>
+            <app-button variant="danger" (click)="confirmDelete(q.id)" [disabled]="isDemo">Delete</app-button>
+          </div>
+        </div>
+      </app-card>
       <div *ngIf="list.length === 0" class="text-sm text-slate-500">No questionnaires yet.</div>
     </div>
 
@@ -57,6 +70,7 @@ export class QuestionnaireListComponent implements OnInit {
   list: any[] = [];
   deleteId: string | null = null;
   demoEmail = 'demo@demo.com';
+  menuOpenId: string | null = null;
   get isDemo() {
     const token = this.auth.token();
     const payload = this.decodeToken(token || '');
@@ -70,6 +84,10 @@ export class QuestionnaireListComponent implements OnInit {
   openPublic(id: string) {
     const url = `${window.location.origin}/q/${id}`;
     window.open(url, '_blank');
+  }
+
+  toggleMenu(id: string) {
+    this.menuOpenId = this.menuOpenId === id ? null : id;
   }
 
   private decodeToken(token: string): any | null {

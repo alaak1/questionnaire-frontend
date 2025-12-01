@@ -18,10 +18,6 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
         <app-input label="Age" type="number" formControlName="age"></app-input>
         <app-input label="Email" type="email" formControlName="email"></app-input>
         <app-input label="Phone" type="text" formControlName="phone"></app-input>
-        <label class="flex items-center gap-2 text-sm text-slate-700">
-          <input type="checkbox" formControlName="saveUser" class="h-4 w-4 rounded border-slate-300" />
-          Save my info
-        </label>
         <div class="flex justify-end pt-2">
           <app-button variant="primary" type="submit">Continue</app-button>
         </div>
