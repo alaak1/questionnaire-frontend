@@ -9,19 +9,19 @@ import { ButtonComponent } from '../../shared/components/button/button.component
   imports: [RouterOutlet, RouterLink, ButtonComponent],
   template: `
     <div class="min-h-screen bg-slate-50 text-slate-800">
-      <header class="flex items-center justify-between border-b border-slate-200 bg-white px-8 py-4 shadow-sm">
-        <div class="flex items-center gap-6">
-          <div class="text-lg font-semibold">Questionnaire Admin</div>
-          <nav class="flex gap-4 text-sm font-medium text-slate-600">
+      <header class="flex flex-col gap-3 border-b border-slate-200 bg-white px-4 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+          <div class="text-lg font-semibold text-slate-900">Questionnaire Admin</div>
+          <nav class="flex flex-wrap gap-3 text-sm font-medium text-slate-600">
             <a routerLink="/admin/dashboard" routerLinkActive="text-primary-600">Dashboard</a>
             <a routerLink="/admin/questionnaires" routerLinkActive="text-primary-600">Questionnaires</a>
           </nav>
         </div>
-        <div>
+        <div class="flex justify-end">
           <app-button variant="secondary" size="sm" (click)="logout()">Logout</app-button>
         </div>
       </header>
-      <main class="mx-auto max-w-6xl px-6 py-6">
+      <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
         <router-outlet></router-outlet>
       </main>
     </div>
