@@ -15,7 +15,7 @@ import { CardComponent } from '../../../shared/components/card/card.component';
     <div class="flex min-h-[70vh] items-center justify-center">
       <app-card class="w-full max-w-md">
         <h2 class="mb-6 text-xl font-semibold text-slate-800">Admin Login</h2>
-        <form class="space-y-4" [formGroup]="form" (ngSubmit)="submit()">
+        <form class="flex flex-col space-y-4" [formGroup]="form" (ngSubmit)="submit()">
           <app-input label="Email" type="email" formControlName="email"></app-input>
           <app-input label="Password" type="password" formControlName="password"></app-input>
           <app-button variant="primary" type="submit" class="w-full">Login</app-button>
