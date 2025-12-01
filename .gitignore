@@ -1,0 +1,11 @@
+# Node / Angular
+node_modules
+dist
+.angular
+
+# Env / IDE
+.env
+.env.local
+.vscode
+.idea
+*.log
