@@ -4,9 +4,11 @@ import { QuestionnaireService } from '../../../core/services/questionnaire.servi
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { NgFor, NgIf, DatePipe } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
-import { ChartConfiguration } from 'chart.js';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-questionnaire-results',
@@ -80,14 +82,23 @@ export class QuestionnaireResultsComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.qs.results(id).subscribe((res) => {
       this.data = res;
+      const lineData = res?.lineChartData || [];
       this.chartData = {
-        labels: res.lineChartData.map((x: any) => x.label),
-        datasets: [{ data: res.lineChartData.map((x: any) => x.value), label: 'Submissions', borderColor: '#4f46e5', tension: 0.3 }]
+        labels: lineData.map((x: any) => x.label),
+        datasets: [
+          {
+            data: lineData.map((x: any) => x.value),
+            label: 'Submissions',
+            borderColor: '#4f46e5',
+            tension: 0.3
+          }
+        ]
       };
     });
   }
 
   keyVals(obj: any) {
+    if (!obj) return [];
     return Object.keys(obj).map((k) => ({ key: k, value: obj[k] }));
   }
 

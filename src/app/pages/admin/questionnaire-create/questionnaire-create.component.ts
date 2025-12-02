@@ -46,6 +46,7 @@ import { NgFor, NgIf } from '@angular/common';
               (change)="onTypeChange(q)"
             >
               <option value="text">Text</option>
+              <option value="truefalse">True / False</option>
               <option value="mcq">Multiple Choice</option>
               <option value="checkbox">Checkbox</option>
               <option value="rating">Rating</option>
