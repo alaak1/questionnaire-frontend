@@ -25,6 +25,7 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
           <div><span class="font-semibold">Questionnaire:</span> {{ questionnaireTitle }}</div>
           <div><span class="font-semibold">Session:</span> {{ submission.sessionId }}</div>
           <div><span class="font-semibold">User:</span> {{ submission.user?.email || 'Anonymous' }}</div>
+          <div><span class="font-semibold">User:</span> {{ submission.user?.name || 'Anonymous' }}</div>
           <div><span class="font-semibold">Completed:</span> {{ submission.completed_at | date: 'short' }}</div>
         </div>
       </app-card>
@@ -34,9 +35,6 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
           <div class="text-sm font-semibold text-slate-800">{{ a.questionText }}</div>
           <div class="mt-1 text-sm text-slate-700">
             <span class="font-semibold">Answer:</span> {{ formatAnswer(a.answerValue) }}
-          </div>
-          <div *ngIf="a.flagged" class="mt-2 inline-block rounded bg-amber-100 px-2 py-1 text-xs text-amber-700">
-            Flagged
           </div>
         </app-card>
       </div>

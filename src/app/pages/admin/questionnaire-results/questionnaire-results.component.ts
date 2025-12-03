@@ -45,17 +45,11 @@ Chart.register(...registerables);
 
     <div class="mt-6">
       <h3 class="mb-2 text-lg font-semibold text-slate-800">Completed Sessions</h3>
-      <app-card *ngFor="let s of data?.completedUsers" class="mb-3">
+      <app-card *ngFor="let s of data?.completedUsers" class="space-y-3 flex flex-col mb-3">
         <div class="text-sm font-semibold text-slate-700">
-          {{ s.user?.email || 'Anon' }} — {{ s.completed_at | date: 'short' }}
+          {{ s.user?.name || 'Anon' }} — {{ s.completed_at | date: 'short' }}
         </div>
-        <ul class="mt-2 space-y-1 text-xs text-slate-600">
-          <li *ngFor="let a of s.answers">
-            <span class="font-semibold">{{ a.questionText }}:</span> {{ a.answerValue | json }}
-            <span *ngIf="a.flagged" class="text-danger-600">(flagged)</span>
-          </li>
-        </ul>
-        <div class="mt-3 flex justify-end">
+        <div class=" flex justify-end">
           <app-button
             variant="secondary"
             size="sm"
