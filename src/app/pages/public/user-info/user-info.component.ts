@@ -83,7 +83,7 @@ export class UserInfoComponent implements OnInit {
     age: [null],
     email: ['', [Validators.required, Validators.email]],
     phone: [''],
-    saveUser: [false]
+    saveUser: [true]
   });
 
   ngOnInit() {
