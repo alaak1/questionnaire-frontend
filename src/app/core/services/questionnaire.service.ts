@@ -4,6 +4,13 @@ import { Questionnaire } from '../models/questionnaire.model';
 import { Answer } from '../models/answer.model';
 import { tap } from 'rxjs';
 
+export interface SubmissionResponse {
+  message: string;
+  reportStatus: string;
+  sessionId: string;
+  reportId: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class QuestionnaireService {
   questionnaires = signal<Questionnaire[]>([]);
@@ -44,7 +51,7 @@ export class QuestionnaireService {
   }
 
   submitAnswers(id: string, body: { sessionId: string; answers: Answer[] }) {
-    return this.api.post(`/q/${id}/submit`, body);
+    return this.api.post<SubmissionResponse>(`/q/${id}/submit`, body);
   }
 
   results(id: string) {

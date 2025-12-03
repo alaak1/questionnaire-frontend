@@ -6,4 +6,7 @@ export interface Questionnaire {
   description?: string;
   created_at?: string;
   questions?: Question[];
+  admin_id?: string | null;
+  is_legacy?: boolean;
+  version_number?: number;
 }

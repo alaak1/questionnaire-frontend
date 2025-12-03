@@ -23,6 +23,12 @@ import { AuthService } from '../../../core/services/auth.service';
           <div class="flex-1">
             <div class="flex items-center gap-2">
               <div class="text-lg font-semibold text-slate-800">{{ q.title }}</div>
+              <span
+                *ngIf="q.is_legacy"
+                class="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold uppercase text-slate-600"
+              >
+                Legacy
+              </span>
               <div class="md:hidden">
                 <button
                   class="rounded-full p-2 text-slate-600 hover:bg-slate-100"

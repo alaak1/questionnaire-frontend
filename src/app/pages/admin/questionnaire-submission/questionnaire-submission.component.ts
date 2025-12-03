@@ -27,7 +27,14 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
           <div><span class="font-semibold">User:</span> {{ submission.user?.email || 'Anonymous' }}</div>
           <div><span class="font-semibold">User:</span> {{ submission.user?.name || 'Anonymous' }}</div>
           <div><span class="font-semibold">Completed:</span> {{ submission.completed_at | date: 'short' }}</div>
+          <div><span class="font-semibold">Report status:</span> {{ submission.scoring_output?.status || 'pending_ai' }}</div>
+          <div><span class="font-semibold">AI report:</span> {{ submission.ai_report_text || 'Pending integration' }}</div>
         </div>
+      </app-card>
+
+      <app-card class="mb-4" *ngIf="submission.scoring_output">
+        <div class="text-sm font-semibold text-slate-800 mb-2">Scoring output</div>
+        <pre class="text-xs text-slate-700 whitespace-pre-wrap break-words">{{ submission.scoring_output | json }}</pre>
       </app-card>
 
       <div class="flex flex-col space-y-3 mt-3">

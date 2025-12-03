@@ -322,9 +322,15 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     }
     const id = this.route.parent?.snapshot.params['id'] ?? this.route.snapshot.params['id'];
     const answers = Array.from(this.answers.values());
-    this.qs.submitAnswers(id, { sessionId: this.sessionId, answers }).subscribe(() => {
+    this.qs.submitAnswers(id, { sessionId: this.sessionId, answers }).subscribe((resp) => {
       sessionStorage.removeItem(`q-session-${id}`);
-      this.router.navigate(['/q', id, 'thank-you']);
+      this.router.navigate(['/q', id, 'thank-you'], {
+        state: {
+          reportStatus: resp.reportStatus,
+          reportId: resp.reportId,
+          sessionId: resp.sessionId
+        }
+      });
     });
   }
 

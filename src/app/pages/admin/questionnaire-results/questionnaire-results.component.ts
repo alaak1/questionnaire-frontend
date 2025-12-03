@@ -1,11 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuestionnaireService } from '../../../core/services/questionnaire.service';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { NgFor, NgIf, DatePipe } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 Chart.register(...registerables);
@@ -34,7 +33,9 @@ Chart.register(...registerables);
         <div class="text-sm font-semibold text-slate-700">{{ q.questionText }}</div>
         <div class="text-xs text-slate-500">Type: {{ q.type }}</div>
         <div class="mt-2 text-sm text-slate-700">Count: {{ q.stats.count }}</div>
-        <div *ngIf="q.stats.average" class="text-sm text-slate-700">Average: {{ q.stats.average | number:'1.1-2' }}</div>
+        <div *ngIf="q.stats.average" class="text-sm text-slate-700">
+          Average: {{ q.stats.average | number: '1.1-2' }}
+        </div>
         <div *ngIf="q.stats.optionCounts">
           <div *ngFor="let opt of keyVals(q.stats.optionCounts)" class="text-xs text-slate-600">
             {{ opt.key }}: {{ opt.value }}
@@ -47,7 +48,20 @@ Chart.register(...registerables);
       <h3 class="mb-2 text-lg font-semibold text-slate-800">Completed Sessions</h3>
       <app-card *ngFor="let s of data?.completedUsers" class="space-y-3 flex flex-col mb-3">
         <div class="text-sm font-semibold text-slate-700">
-          {{ s.user?.name || 'Anon' }} — {{ s.completed_at | date: 'short' }}
+          {{ s.user?.name || 'Anon' }} · {{ s.completed_at | date: 'short' }}
+        </div>
+        <div class="text-xs text-slate-500">
+          Report status: {{ s.scoring_output?.status || 'pending_ai' }}
+        </div>
+        <div class="text-xs text-slate-500" *ngIf="s.ai_report_text; else reportPending">
+          AI report: {{ s.ai_report_text }}
+        </div>
+        <ng-template #reportPending>
+          <div class="text-xs text-slate-500">AI report pending integration.</div>
+        </ng-template>
+        <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600" *ngIf="s.scoring_output">
+          <div class="font-semibold text-slate-700 mb-1">Scoring output</div>
+          <pre class="whitespace-pre-wrap break-words">{{ s.scoring_output | json }}</pre>
         </div>
         <div class=" flex justify-end">
           <app-button
